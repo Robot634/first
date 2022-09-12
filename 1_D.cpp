@@ -11,39 +11,44 @@ signed main(){
     cin>>n;
     vector<ll>v(n);
     for(ll i = 0; i<n; i++)cin>>v[i];
+    sort(v.begin(), v.end());
     for(ll i = 0; i<200; i++){
         for(ll j = 0; j<200; j++){
             check[i][j] = inf;
         }
     }
-    sort(v.begin(), v.end());
     ll ok = v[0];
-    for(ll i = 0; i<n; i++)check[i][0] = 0;
-    for(ll i = 1; i<v.size(); i++){
-        if(ok-1<0)break;
-        check[i][0] = 1;
-        ans[i][0] = 1;
-        ok-=1;
+    for(ll i = 0; i<n; i++){
+        check[i][0] = 0;
     }
-    for(ll j = 1; j<v.size(); j++){
+    for(ll i = 1; i<n; i++){
+        if(ok-1<0)break;
+        ans[i][0] = 1;
+        check[i][0] = 1;
+        ok--;
+    }
+    for(ll j = 1; j<n; j++){
         ll kek = v[j];
-        for(ll i = 0; i<v.size(); i++){
-            if(j == i)continue;
-            if(kek <= 0)break;
-            else if(check[j][i] == inf){
+        for(ll i = 0; i<n; i++){
+            if(i == j)continue;
+            if(kek<=0){
+                check[i][j] = 0;
+                ans[i][j] = 0;
+                continue;
+            }
+            if(check[j][i] == inf and kek>0){
                 ans[i][j] = 1;
                 check[i][j] = 1;
-                kek-=1;
+                kek--;
+                continue;
             }
-            else{
-                ans[i][j] = abs(2-check[j][i]);
-                kek-=abs(2-check[j][i]);
-            }
-            //cout<<i<<" "<<j<<" "<<kek<<"\n";
+            ans[i][j] = abs(2-check[j][i]);
+            kek-=abs(2-check[j][i]);
+            check[i][j] = ans[i][j];
         }
     }
     for(ll i = 0; i<n; i++){
-        for(ll j = 0 ;j<n; j++){
+        for(ll j = 0; j<n; j++){
             cout<<ans[i][j]<<" ";
         }
         cout<<"\n";
