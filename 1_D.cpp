@@ -47,8 +47,8 @@ signed main(){
             check[i][j] = ans[i][j];
         }
     }
-    for(ll i = 0; i<n; i++){
-        for(ll j = 0; j<n; j++){
+    for(ll j = n-1; j>=0; j--){
+        for(ll i = n-1; i>=0; i--){
             cout<<ans[i][j]<<" ";
         }
         cout<<"\n";
